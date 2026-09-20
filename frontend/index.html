@@ -1,0 +1,1203 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Healthcare Record Integrity</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =========================================================
+     LOGIN SCREEN
+========================================================= -->
+
+<section id="loginScreen" class="screen active">
+
+    <div class="login-container">
+
+        <div class="brand">
+            <div class="brand-icon">⛓</div>
+
+            <h1>Healthcare Record Integrity</h1>
+
+            <p>
+                Blockchain-Based Secure Medical Data Sharing
+            </p>
+        </div>
+
+        <div class="login-card">
+
+            <h2>Organization Login</h2>
+
+            <p class="login-subtitle">
+                Authorized healthcare organizations only
+            </p>
+
+            <div id="loginMessage" class="message hidden"></div>
+
+            <label>Username</label>
+
+            <input
+                id="username"
+                type="text"
+                placeholder="Enter username"
+            >
+
+            <label>Password</label>
+
+            <input
+                id="password"
+                type="password"
+                placeholder="Enter password"
+            >
+
+            <button id="loginBtn" class="primary-btn full-width">
+                Login
+            </button>
+
+            <div class="demo-accounts">
+
+                <h3>Quick Demo Login</h3>
+
+                <button
+                    class="demo-btn"
+                    data-user="hospital_a"
+                    data-pass="hospital_a_pass">
+                    🏥 Hospital A
+                </button>
+
+                <button
+                    class="demo-btn"
+                    data-user="hospital_b"
+                    data-pass="hospital_b_pass">
+                    🏥 Hospital B
+                </button>
+
+                <button
+                    class="demo-btn"
+                    data-user="insurance_bcbs"
+                    data-pass="insurance_pass">
+                    🛡 Insurance
+                </button>
+
+                <button
+                    class="demo-btn"
+                    data-user="admin"
+                    data-pass="admin_pass">
+                    ⚙ Admin
+                </button>
+
+            </div>
+
+            <div class="login-note">
+
+                <strong>Important:</strong>
+
+                Patients do not have login credentials.
+                This prototype demonstrates secure
+                inter-organization healthcare verification.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MAIN APPLICATION
+========================================================= -->
+
+<section id="appScreen" class="screen hidden">
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+        <div class="topbar-brand">
+
+            <div class="small-logo">
+                ⛓
+            </div>
+
+            <div>
+                <h2>Healthcare Integrity Ledger</h2>
+
+                <span>
+                    SHA-256 • Merkle Tree • Blockchain
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+            <div class="organization-info">
+
+                <strong id="orgName">
+                    Organization
+                </strong>
+
+                <small id="orgRole">
+                    ROLE
+                </small>
+
+            </div>
+
+            <button id="logoutBtn" class="logout-btn">
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN DASHBOARD -->
+
+    <main class="dashboard">
+
+
+        <!-- SYSTEM STATUS -->
+
+        <section class="status-banner">
+
+            <div class="status-left">
+
+                <div id="systemStatusDot" class="status-dot"></div>
+
+                <div>
+
+                    <strong id="systemStatus">
+                        System Operational
+                    </strong>
+
+                    <span>
+                        Blockchain integrity monitoring active
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="validateChainBtn"
+                class="outline-btn">
+                ⛓ Validate Blockchain
+            </button>
+
+        </section>
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    👥
+                </div>
+
+                <div>
+
+                    <span class="stat-label">
+                        Patients Indexed
+                    </span>
+
+                    <strong
+                        id="patientsCount"
+                        class="stat-value">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    ⛓
+                </div>
+
+                <div>
+
+                    <span class="stat-label">
+                        Blockchain Blocks
+                    </span>
+
+                    <strong
+                        id="blocksCount"
+                        class="stat-value">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    🔐
+                </div>
+
+                <div>
+
+                    <span class="stat-label">
+                        Transactions
+                    </span>
+
+                    <strong
+                        id="transactionsCount"
+                        class="stat-value">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon orange">
+                    🛡
+                </div>
+
+                <div>
+
+                    <span class="stat-label">
+                        Ledger Status
+                    </span>
+
+                    <strong
+                        id="ledgerStatus"
+                        class="stat-value">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SEARCH + BLOCKCHAIN -->
+
+        <section class="main-grid">
+
+
+            <!-- PATIENT SEARCH -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>🔎 Patient Search</h2>
+
+                        <p>
+                            Search the longitudinal EHR registry
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="search-box">
+
+                    <input
+                        id="patientSearch"
+                        type="text"
+                        placeholder="Patient ID or patient name..."
+                    >
+
+                    <button
+                        id="searchPatientBtn"
+                        class="primary-btn">
+                        Search
+                    </button>
+
+                </div>
+
+
+                <div id="searchResults">
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            🔎
+                        </div>
+
+                        <p>
+                            Search for a patient to view
+                            their medical record.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BLOCKCHAIN SUMMARY -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>⛓ Blockchain</h2>
+
+                        <p>
+                            Hash-linked healthcare ledger
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="blockchainSummary"
+                    class="blockchain-card">
+
+                    Loading blockchain...
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SELECTED PATIENT -->
+
+        <section
+            id="patientSection"
+            class="panel hidden">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="section-label">
+                        SELECTED PATIENT
+                    </span>
+
+                    <h2 id="selectedPatientName">
+                        —
+                    </h2>
+
+                    <p id="selectedPatientMeta">
+                        —
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="viewEhrBtn"
+                    class="primary-btn">
+                    📋 Load Full EHR
+                </button>
+
+            </div>
+
+
+            <div id="ehrContainer" class="hidden">
+
+                <div class="ehr-section-title">
+
+                    <h3>
+                        🏥 Medical Encounters
+                    </h3>
+
+                    <span
+                        id="encounterCount"
+                        class="count-badge">
+                        0
+                    </span>
+
+                </div>
+
+
+                <div id="encounterList"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INTEGRITY -->
+
+        <section
+            id="integritySection"
+            class="panel hidden">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="section-label">
+                        CRYPTOGRAPHIC VERIFICATION
+                    </span>
+
+                    <h2>
+                        🔐 Record Integrity
+                    </h2>
+
+                    <p>
+                        SHA-256 + Merkle Proof + Blockchain
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="verifyBtn"
+                    class="verify-btn">
+                    ✓ Verify Record
+                </button>
+
+            </div>
+
+
+            <div
+                id="verificationResult"
+                class="verification-result">
+
+                <div class="verification-placeholder">
+
+                    🔐
+
+                    <p>
+                        Select an encounter and verify
+                        its cryptographic integrity.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TAMPER DEMO -->
+
+        <section class="panel tamper-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="section-label warning-label">
+                        DEMONSTRATION MODE
+                    </span>
+
+                    <h2>
+                        🚨 Tamper Detection Demo
+                    </h2>
+
+                    <p>
+                        Educational simulation of
+                        unauthorized off-chain modification.
+                    </p>
+
+                </div>
+
+
+                <span class="demo-warning">
+                    DEMO ONLY
+                </span>
+
+            </div>
+
+
+            <div class="tamper-controls">
+
+                <input
+                    id="tamperEncounterId"
+                    type="text"
+                    placeholder="Encounter ID"
+                >
+
+                <button
+                    id="clinicalTamperBtn"
+                    class="danger-btn">
+                    🚨 Clinical Tamper
+                </button>
+
+                <button
+                    id="billingTamperBtn"
+                    class="danger-btn">
+                    💰 Billing Tamper
+                </button>
+
+                <button
+                    id="restoreBtn"
+                    class="restore-btn">
+                    ↩ Restore
+                </button>
+
+            </div>
+
+
+            <div
+                id="tamperMessage"
+                class="tamper-message hidden">
+            </div>
+
+        </section>
+
+
+        <!-- BLOCKCHAIN EXPLORER -->
+
+        <section id="blockchainPanel" class="panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="section-label">
+                        LEDGER EXPLORER
+                    </span>
+
+                    <h2>
+                        ⛓ Blockchain Blocks
+                    </h2>
+
+                    <p>
+                        Hash-linked blocks containing
+                        Merkle-rooted transactions.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="loadBlocksBtn"
+                    class="outline-btn">
+                    Refresh Blocks
+                </button>
+
+            </div>
+
+
+            <div id="blocksTable">
+
+                Loading blocks...
+
+            </div>
+
+        </section>
+
+
+        <!-- AUDIT -->
+
+        <section id="auditPanel" class="panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="section-label">
+                        DSA AUDIT TRAIL
+                    </span>
+
+                    <h2>
+                        📋 System Activity
+                    </h2>
+
+                    <p>
+                        AuditLogLinkedList based activity history.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="refreshAuditBtn"
+                    class="outline-btn">
+                    Refresh
+                </button>
+
+            </div>
+
+
+            <div id="auditTable">
+
+                Loading audit trail...
+
+            </div>
+
+        </section>
+
+
+        <!-- INSURANCE CLAIMS & BILLING -->
+<section class="panel" id="claimsPanel">
+
+    <div class="panel-header">
+        <div>
+            <span class="section-label">INSURANCE & BILLING</span>
+            <h2>💳 Claims & Billing Integrity</h2>
+            <p>
+                Search insurance claims and cryptographically verify billing integrity.
+            </p>
+        </div>
+    </div>
+
+    <div class="claims-search">
+        <input
+            id="claimPatientId"
+            type="text"
+            placeholder="Enter Patient ID e.g. P001171"
+        />
+
+        <input
+            id="claimIdInput"
+            type="text"
+            placeholder="Or enter Claim ID"
+        />
+
+        <button id="claimSearchBtn" class="primary-btn">
+            🔎 Search Claims
+        </button>
+    </div>
+
+    <div id="claimsList" class="claims-list">
+        <div class="empty-state">
+            Enter a Patient ID or Claim ID to search insurance claims.
+        </div>
+    </div>
+
+    <div id="claimDetails" class="hidden">
+        <div class="claim-details-card">
+
+            <div class="claim-header">
+                <div>
+                    <span class="section-label">SELECTED CLAIM</span>
+                    <h3 id="selectedClaimTitle">Claim</h3>
+                </div>
+
+                <button
+                    id="verifyClaimBtn"
+                    class="success-btn">
+                    ✓ Verify Claim
+                </button>
+            </div>
+
+            <div id="claimInfo"></div>
+
+            <div id="claimVerification"
+                 class="claim-verification hidden">
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+        <!-- =========================================================
+             DATA STRUCTURE VISUALIZER
+        ========================================================== -->
+
+        <section id="dsVisualizerPanel" class="panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="section-label">
+                        LIVE DSA VISUALIZATION
+                    </span>
+
+                    <h2>
+                        🔗 Data Structure Visualizer
+                    </h2>
+
+                    <p>
+                        Live visual representation of the Merkle Tree
+                        and hash-linked Blockchain used in this system.
+                    </p>
+
+                </div>
+
+
+                <div class="ds-visualizer-controls">
+
+                    <label for="visualizerBlockSelect">
+                        Select Block
+                    </label>
+
+                    <select id="visualizerBlockSelect">
+                        <option value="126">
+                            Block #126
+                        </option>
+                    </select>
+
+                    <button
+                        id="refreshVisualizerBtn"
+                        class="primary-btn"
+                        type="button">
+                        🔄 Refresh Live Data
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 MERKLE TREE + BLOCKCHAIN
+            ====================================================== -->
+
+            <div class="ds-visualizer-grid">
+
+
+                <!-- =================================================
+                     MERKLE TREE
+                ================================================== -->
+
+                <div class="ds-card merkle-visualizer-card">
+
+                    <div class="ds-card-header">
+
+                        <div>
+
+                            <span class="section-label">
+                                CRYPTOGRAPHIC DATA STRUCTURE
+                            </span>
+
+                            <h3>
+                                🌳 Merkle Tree
+                            </h3>
+
+                            <p>
+                                SHA-256 transaction hashes arranged
+                                as a binary hash tree.
+                            </p>
+
+                        </div>
+
+                        <span class="ds-badge">
+                            SHA-256
+                        </span>
+
+                    </div>
+
+
+                    <!-- Merkle Summary -->
+
+                    <div class="ds-summary-grid">
+
+                        <div class="ds-summary-item">
+
+                            <span>
+                                Transactions
+                            </span>
+
+                            <strong id="visualizerTxCount">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ds-summary-item">
+
+                            <span>
+                                Tree Height
+                            </span>
+
+                            <strong id="visualizerTreeHeight">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ds-summary-item">
+
+                            <span>
+                                Merkle Root
+                            </span>
+
+                            <strong
+                                id="visualizerMerkleRoot"
+                                class="hash-text">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Live Merkle Tree -->
+
+                    <div
+                        id="merkleTreeVisualization"
+                        class="merkle-tree-visualization">
+
+                        <div class="visualizer-loading">
+                            Loading live Merkle Tree...
+                        </div>
+
+                    </div>
+
+
+                    <!-- Merkle Explanation -->
+
+                    <div class="ds-info-box">
+
+                        <strong>
+                            How the Merkle Tree works
+                        </strong>
+
+                        <p>
+                            Each transaction is converted into a
+                            SHA-256 leaf hash. Hashes are combined
+                            pairwise until a single Merkle Root
+                            is produced.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     LINKED BLOCKCHAIN
+                ================================================== -->
+
+                <div class="ds-card blockchain-visualizer-card">
+
+                    <div class="ds-card-header">
+
+                        <div>
+
+                            <span class="section-label">
+                                HASH-LINKED DATA STRUCTURE
+                            </span>
+
+                            <h3>
+                                ⛓ Linked Blockchain
+                            </h3>
+
+                            <p>
+                                Sequential blocks connected through
+                                cryptographic hash links.
+                            </p>
+
+                        </div>
+
+                        <span class="ds-badge blockchain-badge">
+                            BLOCKCHAIN
+                        </span>
+
+                    </div>
+
+
+                    <!-- Blockchain Summary -->
+
+                    <div class="ds-summary-grid">
+
+                        <div class="ds-summary-item">
+
+                            <span>
+                                Total Blocks
+                            </span>
+
+                            <strong id="visualizerTotalBlocks">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ds-summary-item">
+
+                            <span>
+                                Selected Block
+                            </span>
+
+                            <strong id="visualizerSelectedBlock">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ds-summary-item">
+
+                            <span>
+                                Nonce
+                            </span>
+
+                            <strong id="visualizerNonce">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Selected Block -->
+
+                    <div
+                        id="selectedBlockVisualization"
+                        class="selected-block-visualization">
+
+                        <div class="visualizer-loading">
+                            Loading live blockchain block...
+                        </div>
+
+                    </div>
+
+
+                    <!-- Previous Hash -->
+
+                    <div
+                        id="previousHashVisualization"
+                        class="previous-hash-visualization">
+                    </div>
+
+
+                    <!-- Linked Blockchain -->
+
+                    <div
+                        id="blockchainChainVisualization"
+                        class="blockchain-chain-visualization">
+
+                        <div class="visualizer-loading">
+                            Loading linked blocks...
+                        </div>
+
+                    </div>
+
+
+                    <!-- Blockchain Explanation -->
+
+                    <div class="ds-info-box">
+
+                        <strong>
+                            How the Blockchain works
+                        </strong>
+
+                        <p>
+                            Every block stores its own hash and the
+                            hash of the previous block. Changing an
+                            earlier block therefore breaks the
+                            cryptographic hash chain.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =====================================================
+                 END-TO-END PIPELINE
+            ====================================================== -->
+
+            <div class="ds-flow">
+
+                <div class="ds-flow-title">
+                    EHR Integrity Pipeline
+                </div>
+
+
+                <div class="ds-flow-steps">
+
+
+                    <div class="ds-flow-step">
+
+                        <span>1</span>
+
+                        <strong>
+                            EHR Record
+                        </strong>
+
+                    </div>
+
+
+                    <div class="ds-flow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="ds-flow-step">
+
+                        <span>2</span>
+
+                        <strong>
+                            SHA-256
+                        </strong>
+
+                    </div>
+
+
+                    <div class="ds-flow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="ds-flow-step">
+
+                        <span>3</span>
+
+                        <strong>
+                            Merkle Tree
+                        </strong>
+
+                    </div>
+
+
+                    <div class="ds-flow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="ds-flow-step">
+
+                        <span>4</span>
+
+                        <strong>
+                            Merkle Root
+                        </strong>
+
+                    </div>
+
+
+                    <div class="ds-flow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="ds-flow-step">
+
+                        <span>5</span>
+
+                        <strong>
+                            Blockchain Block
+                        </strong>
+
+                    </div>
+
+
+                    <div class="ds-flow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="ds-flow-step">
+
+                        <span>6</span>
+
+                        <strong>
+                            Verification
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+<!-- BENCHMARK -->
+
+        <section id="benchmarkPanel" class="panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="section-label">
+                        PERFORMANCE ANALYSIS
+                    </span>
+
+                    <h2>
+                        📊 DSA Benchmarks
+                    </h2>
+
+                    <p>
+                        Runtime measurements of the
+                        implemented algorithms.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="benchmarkBtn"
+                    class="outline-btn">
+                    Run Benchmark
+                </button>
+
+            </div>
+
+
+            <div id="benchmarkResults">
+
+                Click <strong>Run Benchmark</strong>
+                to measure DSA performance.
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <strong>
+            Healthcare Record Integrity & Cross-Hospital Sharing
+        </strong>
+
+        <span>
+            Educational DSA Capstone Prototype
+        </span>
+
+    </footer>
+
+</section>
+
+
+<!-- TOAST -->
+
+<div id="toast" class="toast hidden"></div>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
